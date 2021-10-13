@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <th th:fragment="column_link(pageName, fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
+        <a th:href="@{'/' + ${pageName} + '/page/' + ${currentPage} + '?sortField=' + ${fieldName} + '&sortDir=' + ${reverseSortDir}
+                        + '&keyword=' + ${keyword} + ${categoryId != null ? '&categoryId=' + categoryId : ''}}"
+            style="text-decoration: none; color: white;">
+            [[${columnLabel}]]
+        </a>
+        <span th:if="${sortField == fieldName}"
+            th:class="${sortDir == 'asc'? 'fas fa-sort-up' : 'fas fa-sort-down'}"
+            style="padding-left: 10px;">
+        </span>
+    </th>
+
+    <a th:fragment="page_link(pageName, page)"
+       class="page-link" 
+       th:href="@{'/' + ${pageName} + '/page/' + ${page} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}
+       				 + ${categoryId != null ? '&categoryId=' + categoryId : ''}}"
+    >
+        [[${page}]]
+    </a>
+    
+    
+    <a th:fragment="page_words_link(pageName, page, word)"
+       class="page-link" 
+       th:href="@{'/' + ${pageName} + '/page/' + ${page} + '?sortField='+ ${sortField} + '&sortDir=' + ${sortDir} + '&keyword=' + ${keyword}
+       				+ ${categoryId != null ? '&categoryId=' + categoryId : ''}}"
+    >
+        [[${word}]]
+    </a>
+    
+    <div th:fragment="search_form_and_message(module)">
+		<form th:action="@{ '/' + ${module} + '/page/1'}" class="form-inline m-3">
+			<input type="hidden" name="sortField" th:value="${sortField}" />
+			<input type="hidden" name="sortDir" th:value="${sortDir}" />
+			
+			Filter:&nbsp;
+			<input type="search" name="keyword" th:value="${keyword}" class="form-control my-2" required/>
+			<button type="submit" class="btn btn-primary ml-lg-2">
+				Search
+			</button>
+			<button type="button" class="btn btn-secondary ml-2" id="clearSearch">
+				Clear
+			</button>
+		</form>
+		
+		<div th:if="${message != null}" class="alert alert-success text-center">
+			[[${message}]]
+			
+			 <button type="button" class="close text-right" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+            </button>
+		</div>		
+	</div>
+	
+	
+	<div th:fragment="pagination(moduleURL)" th:remove="tag">
+		
+			<div class="text-center m-1" th:if="${(totalItems > 0) && (currentPage<=totalPages)}">
+                <span>Showing [[${moduleURL}]] from: [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]</span>
+            </div>
+            <div class="text-center m-1" th:if="${(totalItems <= 0) || (currentPage>totalPages)}">
+                <span><h3>No [[${moduleURL}]] found.</h3></span>
+            </div>
+
+			<div th:if="${(totalItems > 0) && (currentPage<=totalPages)}">
+				<nav>
+				  <ul class="pagination justify-content-center flex-wrap">
+				  	<li th:class="${currentPage > 1? 'page-item': 'page-item disabled'}">
+						<a th:replace="fragments :: page_words_link(${moduleURL}, '1', 'First')"/>
+			  		</li>
+				    <li th:class="${currentPage > 1? 'page-item': 'page-item disabled'}">
+				    	<a th:replace="fragments :: page_words_link(${moduleURL}, ${currentPage-1}, 'Previous')"/>
+			    	</li>
+			    	<li th:if="${currentPage-1>1}" class="page-item">
+				    	<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage-2})"/>
+			    	</li>
+	    		 	<li th:if="${currentPage>1}" class="page-item">
+	    		 		<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage-1})"/>
+		 			</li>
+				    <li class="page-item active">
+				    	<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage})"/>
+			    	</li>
+				    <li th:if="${currentPage<totalPages}" class="page-item">
+				    	<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage+1})"/>
+			    	</li>
+			    	<li th:if="${currentPage+1<totalPages}" class="page-item">
+				    	<a th:replace="fragments :: page_link(${moduleURL}, ${currentPage+2})"/>
+			    	</li>			    	
+				    <li th:class="${currentPage < totalPages? 'page-item': 'page-item disabled'}">
+				    	<a th:replace="fragments :: page_words_link(${moduleURL}, ${currentPage+1}, 'Next')"/>
+			    	</li>
+			    	<li th:class="${currentPage < totalPages? 'page-item': 'page-item disabled'}">
+			    		<a th:replace="fragments :: page_words_link(${moduleURL}, ${totalPages}, 'Last')"/>
+		    		</li>
+				  </ul>
+				</nav>
+			</div>
+				
+	</div>
+	
+	<div th:fragment="format_currency(amount)" th:remove="tag">
+		<span th:if="${CURRENCY_SYMBOL_POSITION == 'Before price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>[[${#numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE)}]]<span th:if="${CURRENCY_SYMBOL_POSITION == 'After price'}" th:remove="tag">[[${CURRENCY_SYMBOL}]]</span>
+	</div>
+	
+	<div th:fragment="format_time(dateTime)" th:remove="tag">
+		<span th:text="${#dates.format(dateTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+	</div>
+	
+	<div th:fragment="currency_input(amount)" th:remove="tag">
+		<input type="text" readonly class="form-control" th:value="${(CURRENCY_SYMBOL_POSITION == 'Before price' ? CURRENCY_SYMBOL : '') + #numbers.formatDecimal(amount, 1, THOUSANDS_POINT_TYPE, DECIMAL_DIGITS, DECIMAL_POINT_TYPE) + (CURRENCY_SYMBOL_POSITION == 'After price' ? CURRENCY_SYMBOL : '')}">
+	</div>
+	
+	
+	<div th:fragment="edit(entityName, editURL)" th:remove="tag">
+		<a class="fas fa-edit fa-2x icon-green" th:href="@{${editURL}}"
+			th:title="'Edit this ' + ${entityName}"></a>
+	</div>
+	
+	<div th:fragment="delete(entityName, entityId, deleteURL, visible)" th:remove="tag">
+		<th:block th:if="${visible}">		
+		<a class="fas fa-trash fa-2x icon-dark link-delete" 
+			th:href="@{${deleteURL}}"
+			th:entityId="${entityId}"
+			th:title="'Delete this ' + ${entityName}"></a>
+		</th:block>	
+	</div>
+	
+	<div th:fragment="footer" class="text-center m-3">
+		<p>Shoppr - Copyright &copy; Shoppr</p>
+	</div>
+</body>
+</html>

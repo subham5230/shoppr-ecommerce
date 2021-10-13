@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: page_head('Order Placed', 'none')" />
+<body>
+<div class="container-fluid">
+	<div th:replace="navigation :: menu"></div>
+	<div th:replace="navigation :: search_nav"></div>
+	
+	<div class="text-center m-4 p-3">
+		<h2>Thank you shopping with us!</h2>
+		<p>A confirmation email has been sent to you.
+		<br>
+		Kindly check your email for the details.</p>
+	</div>
+
+	
+	<div th:replace="navigation :: footer_menu"></div>
+</div>	
+</body>
+</html>

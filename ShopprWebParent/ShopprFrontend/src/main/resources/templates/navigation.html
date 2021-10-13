@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xlmns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="menu">
+
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <a class="navbar-brand ml-lg-auto mr-lg-auto" th:href="@{/}" 
+            	style="font-family: 'Cinzel Decorative', cursive; font-size:1.4rem">
+            	[[${SITE_NAME}]]
+        	</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNavbar, #searchNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+	</div>
+	
+	<div th:fragment="brand">
+		<a th:href="@{/}" 
+        	style="font-family: 'Cinzel Decorative', cursive; font-size:2.3rem; text-decoration:none;"
+        	class="text-dark"
+          >
+            	[[${SITE_NAME}]]
+    	</a>
+	</div>
+
+	<div th:fragment="search_nav" class="row">
+		<div class="col-md">
+		
+			<th:block sec:authorize="isAuthenticated()">	
+				<form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+					<input type="submit" value="Logout" />
+				</form>
+			</th:block>
+		
+			<nav class="navbar navbar-expand-sm bg-light">
+				<div class="collapse navbar-collapse" id="searchNavbar">
+					<ul class="navbar-nav">
+                    
+	                    <th:block sec:authorize="!isAuthenticated()">
+	                    <li class="nav-item">
+	                        <a class="nav-link text-dark" th:href="@{/}">Home</a>
+	                    </li>	
+						<li class="nav-item">
+							<a class="nav-link text-dark" th:href="@{/login}">Login</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link text-dark" th:href="@{/register}">Register</a>
+						</li>
+	                    </th:block>
+	                    						
+						<th:block sec:authorize="isAuthenticated()">
+						<li class="nav-item">
+							<b><a class="nav-link text-dark" th:href="@{/account_details}" 
+									sec:authentication="principal.fullName"></a></b>
+						</li>
+						<li class="nav-item">
+	                        <a class="nav-link text-dark" th:href="@{/}">Home</a>
+	                    </li>	
+						
+						<li class="nav-item">
+							<a class="nav-link text-dark" th:href="@{/address_book}">Address Book</a>
+						</li>
+																					
+						<li class="nav-item">
+							<a class="nav-link text-dark" th:href="@{/orders}">Orders</a>
+						</li>
+						
+						<li class="nav-item">
+							<a class="nav-link text-dark" href="javascript: document.logoutForm.submit()">Logout</a>
+						</li>					
+						</th:block>						
+					</ul>
+					
+					<div class="ml-lg-auto">
+					<form class="form-inline" th:action="@{/search}" style="display: flex;">
+						<input type="search" placeholder="Search for products" name="keyword"
+								th:value="${keyword}"
+								 class="form-control mt-sm-2" required/>
+						<input type="submit" class="btn btn-outline-dark mt-2 mx-lg-2" value="Search"/>
+					</form>
+					</div>
+					<div class="m-2 px-lg-3">
+						<a class="text-dark fas fa-shopping-cart mt-1" style="font-size: 25px; text-decoration:none;" th:href="@{/cart}"></a>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+	
+	<div th:fragment="footer_menu" style="margin-top:100px; border-top: 2px solid gray;">
+		<div th:fragment="footer" class="text-center" style="margin-bottom:0">
+		
+			<nav class="navbar navbar-light text-center navbar-expand-lg" style="margin:0;">
+            <button class="navbar-toggler ml-auto mr-auto" type="button" data-toggle="collapse" data-target="#bottomNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="bottomNavbar">
+                <ul class="navbar-nav ml-auto mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/careers}">Careers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/payments}">Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/shipping}">Shipping &amp; Delivery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/contact}">Contact</a>
+                    </li>
+				</ul>
+            </div>
+        </nav>
+		
+		<div class="pb-2">
+			<p style="color:rgb(106, 106, 106); font-size: 1.1rem; margin:0">[[${COPYRIGHT}]]</p>
+		</div>
+		</div>	
+	</div>
+</body>
+</html>

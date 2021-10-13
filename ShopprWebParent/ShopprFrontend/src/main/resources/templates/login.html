@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments :: page_head('Home', 'none')" />
+    <body>
+        <div class="container-fluid">
+        	<div class="mt-4" style="display:flex; justify-content: center">
+            	<div th:replace="navigation :: brand"/>
+        	</div>
+            
+			<div class="text-center mt-5" style="display: flex; justify-content: center;">
+				<a class="btn text-white" style="background-color: #DE5246" th:href="@{/oauth2/authorization/google}">
+					<span><i class="fab fa-google"></i></span> Continue with Google</a>
+			</div>
+			
+			<div class="text-center mt-2" style="display: flex; justify-content: center;">
+				<a class="btn text-white"  style="background-color: #3B5998" th:href="@{/oauth2/authorization/facebook}">
+					<span><i class="fab fa-facebook"></i></span> Continue with Facebook</a>
+			</div>
+			
+            <form th:action="@{/login}" method="POST" style="max-width: 350px; margin: 10px auto;">
+            	<div class="border border-secondary rounded p-3">
+            		<p class="text-center">Access Shoppr Ecommerce</p>
+            		<div th:if="${param.error}">
+            			<p class="alert alert-danger text-center">
+            				[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+            				
+            				<button type="button" class="close text-right" data-dismiss="alert" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+        				</p>
+        				
+            		</div>
+            		
+            		<div th:if="${param.logout}">
+            			<p class="alert alert-warning text-center">
+            				You have been logged out.
+            				
+            				<button type="button" class="close text-right" data-dismiss="alert" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+        				</p>
+        				
+            		</div>
+            		
+            		<p>
+            			<input type="email" name="email" class="form-control" placeholder="Email" required />
+            		</p>
+            		<p>
+            			<input type="password" name="password" class="form-control" placeholder="Password" required />
+            		</p>
+            		<p class="pl-2"> 
+            			<input type="checkbox" name="remember-me" /> 
+            			&nbsp;Remember me
+            		</p>
+            		<p class="text-center">
+            			<input type="submit" value="Login" class="btn btn-primary" />
+            		</p>
+            	</div>
+            </form>
+            
+			<div style="display: flex; justify-content: center;">
+				or &nbsp; <a th:href="@{/forgot_password}">Forgot Password</a>
+			</div>
+			<div style="display: flex; justify-content: center;">
+				Don't have an account? &nbsp;<a th:href="@{/register}"><b>Sign up</b></a>
+			</div>
+            
+            
+            <div th:replace="navigation :: footer_menu"></div>
+        </div>
+    </body>
+</html>
