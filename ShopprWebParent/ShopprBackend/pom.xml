@@ -12,7 +12,7 @@
 	<name>ShopprBackend</name>
 	<description>Shoppr Admin project</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>15</java.version>
 	</properties>
 	
 	<dependencyManagement>
