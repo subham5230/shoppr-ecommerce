@@ -4,9 +4,9 @@ server:
 #    context-path: /
 spring:
   datasource:
-    password: Ferrari.458
-    url: jdbc:mysql://localhost:3306/shoppr_db
-    username: root
+    password: ${DB_PASS}
+    url: jdbc:mysql://${RDS_DB_URL}/${DB_NAME}
+    username: ${DB_USER}
     hikari:
       minimum-idle: 1
       maximum-pool-size: 2
