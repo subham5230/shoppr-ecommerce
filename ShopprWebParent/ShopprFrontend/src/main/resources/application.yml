@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     password: ${DB_PASS}
-    url: jdbc:mysql://${RDS_DB_URL}/${DB_NAME}
+    url: jdbc:mysql://${RDS_DB_URL}:3306/${DB_NAME}
     username: ${DB_USER}
     hikari:
       minimum-idle: 1
