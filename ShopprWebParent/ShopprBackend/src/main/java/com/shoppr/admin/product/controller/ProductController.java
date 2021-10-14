@@ -66,7 +66,7 @@ public class ProductController {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("totalItems", 0);
 			model.addAttribute("listCategories", listCategories);
-			return "/products/products";
+			return "products/products";
 		}
 		
 		List<Product> listProducts = null;
@@ -112,7 +112,7 @@ public class ProductController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 		
-		return "/products/products";
+		return "products/products";
 	}
 	
 	@GetMapping("/products/new")
