@@ -50,7 +50,7 @@ public class UserController {
 		if(pageNum <= 0) {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("totalItems", 0);
-			return "/users/users";
+			return "users/users";
 		}
 		
 		Page<User> page = service.listByPage(pageNum, sortField, sortDir, keyword);
@@ -91,7 +91,7 @@ public class UserController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 		
-		return "/users/users";
+		return "users/users";
 	}
 	
 	@GetMapping("/users/new")
@@ -106,7 +106,7 @@ public class UserController {
 		model.addAttribute("listRoles", listRoles);
 		model.addAttribute("pageTitle", "Create User");
 		
-		return "/users/user_form";
+		return "users/user_form";
 	}
 	
 	@PostMapping("/users/save")
@@ -152,7 +152,7 @@ public class UserController {
 			model.addAttribute("listRoles", listRoles);
 			model.addAttribute("pageTitle", "Edit User");
 			
-			return "/users/user_form";
+			return "users/user_form";
 			
 		}catch(UserNotFoundException e) {
 			redirectAttributes.addFlashAttribute("message", e.getMessage());
