@@ -51,7 +51,7 @@ public class BrandController {
 		if(pageNum <= 0) {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("totalItems", 0);
-			return "/brands/brands";
+			return "brands/brands";
 		}
 		
 		List<Brand> listBrands = null;
@@ -92,7 +92,7 @@ public class BrandController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 		
-		return "/brands/brands";
+		return "brands/brands";
 	}
 	
 	@GetMapping("/brands/new")
@@ -106,7 +106,7 @@ public class BrandController {
 		model.addAttribute("listCategoriesForm", listCategoriesForm);
 		model.addAttribute("pageTitle", "Create Brand");
 		
-		return "/brands/brand_form";
+		return "brands/brand_form";
 	}
 	
 	@GetMapping("/brands/delete/{id}")
@@ -149,7 +149,7 @@ public class BrandController {
 			model.addAttribute("listCategoriesForm", listCategoriesForm);
 			model.addAttribute("pageTitle", "Edit Brand");
 			
-			return "/brands/brand_form";
+			return "brands/brand_form";
 			
 		}catch(BrandNotFoundException e) {
 			redirectAttributes.addFlashAttribute("message", e.getMessage());

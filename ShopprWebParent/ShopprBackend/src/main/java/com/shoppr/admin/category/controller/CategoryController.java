@@ -45,7 +45,7 @@ public class CategoryController {
 		if(pageNum <= 0) {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("totalItems", 0);
-			return "/categories/categories";
+			return "categories/categories";
 		}
 		
 		List<Category> listCategories = null;
@@ -86,7 +86,7 @@ public class CategoryController {
 		model.addAttribute("reverseSortDir", reverseSortDir);
 		model.addAttribute("keyword", keyword);
 		
-		return "/categories/categories";
+		return "categories/categories";
 	}
 	
 	@GetMapping("/categories/{id}/enabled/{enabled}")
@@ -149,7 +149,7 @@ public class CategoryController {
 			model.addAttribute("listCategoriesForm", listCategoriesForm);
 			model.addAttribute("pageTitle", "Edit Category");
 			
-			return "/categories/category_form";
+			return "categories/category_form";
 			
 		}catch(CategoryNotFoundException e) {
 			redirectAttributes.addFlashAttribute("message", e.getMessage());

@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shoppr.admin.AmazonS3Util;
-import com.shoppr.admin.FileUploadUtil;
 import com.shoppr.admin.brand.BrandService;
 import com.shoppr.admin.category.CategoryService;
 import com.shoppr.admin.product.ProductService;
